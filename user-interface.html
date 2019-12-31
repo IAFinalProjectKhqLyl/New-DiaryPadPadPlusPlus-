@@ -114,7 +114,9 @@
                         },'json');
                     });
 
-                    $.post('./php/getUserArticle.php',{},function (data) {
+                    $.post('php/getUserArticle.php',{},function (data) {
+                        console.log('kasdjflkajsdflkjdsalkfjlkdsafjlkdsa');
+                        
                         //window.alert(data);
                         var i;
                         var half = "#release-article-";
