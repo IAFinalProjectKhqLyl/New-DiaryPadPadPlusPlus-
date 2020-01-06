@@ -36,119 +36,119 @@
         $(document).ready(function () {
             $('.button-collapse').sideNav();
             let flag = 0;
-            $.post('./php/getInformation.php',{},function (data) {
+            $.post('./php/getInformation.php', {}, function (data) {
                 $(".user-name").text(data);
                 $("#sidebar-username").text(data);
             });
 
-            $.post('./php/getArticleNum.php',{},function (data) {
+            $.post('./php/getArticleNum.php', {}, function (data) {
                 var i = 1;
                 var ht = "<div class=\"release-articles-base z-depth-2\" id=\"release-article-"
                 var m = "\" data-releasearticleid=\""
                 var l = "\"><div class=\"title\"></div><div class=\"content\"></div></div>"
                 var number = data;
-                if(data>0){
-                    flag=1;
-                    for(;i<=data;i++){
+                if (data > 0) {
+                    flag = 1;
+                    for (; i <= data; i++) {
                         var htm = ht + i + m + i + l;
-                        if(i==1) {
+                        if (i == 1) {
                             $("#release-aritcles-container").html(htm);
                         }
-                        else{
-                            var after = "#release-article-"+(i-1);
+                        else {
+                            var after = "#release-article-" + (i - 1);
                             $(htm).insertBefore(after);
                         }
                         // $(htm).insertAfter("#release-aritcles-container");
                     }
                     // The length of words
                     let words;
-                    if($(window).width()<871&&$(window).width()>=551){
+                    if ($(window).width() < 871 && $(window).width() >= 551) {
                         words = 100;
                     }
-                    else if($(window).width()<551){
+                    else if ($(window).width() < 551) {
                         words = 50;
                     }
-                    else{
+                    else {
                         words = 200;
                     }
 
                     $(window).resize(function () {
-                        if($(window).width()<871&&$(window).width()>=551){
+                        if ($(window).width() < 871 && $(window).width() >= 551) {
                             words = 100;
                         }
-                        else if($(window).width()<551){
+                        else if ($(window).width() < 551) {
                             words = 50;
                         }
-                        else{
+                        else {
                             words = 200;
                         }
-                        $.post('./php/getUserArticle.php',{},function (data) {
+                        $.post('./php/getUserArticle.php', {}, function (data) {
                             //window.alert(data);
                             var i;
                             var half = "#release-article-";
-                            for(i=number;i>=1;i--){
+                            for (i = number; i >= 1; i--) {
                                 //alert(data["CONTENT"]);
-                                var whole = half+i;
+                                var whole = half + i;
                                 var ml = marked(data[i].CONTENT);
                                 // var ht = "<p>"+data[i].CONTENT+"</p>";
                                 $(whole).addClass("Canclick");
-                                $(whole).data('releasearticleid',data[i].AID);
+                                $(whole).data('releasearticleid', data[i].AID);
                                 //window.alert($(whole).data('releasearticleid'));
-                                var ti = whole+" .title";
-                                if(data[i].TITLE!="") {
-                                    $(ti).html("<h4>"+data[i].TITLE+"</h4>");
+                                var ti = whole + " .title";
+                                if (data[i].TITLE != "") {
+                                    $(ti).html("<h4>" + data[i].TITLE + "</h4>");
                                 }
-                                else{
+                                else {
                                     $(ti).html("<h4>No Title</h4>");
                                 }
-                                var co = whole+" .content";
+                                var co = whole + " .content";
                                 $(co).html(ml);
                                 var tent = $(co).text();
-                                var real = tent.substr(0,words);
-                                if(tent.length>words){
-                                    real+="&nbsp;&nbsp;&nbsp;. . . . . .";
+                                var real = tent.substr(0, words);
+                                if (tent.length > words) {
+                                    real += "&nbsp;&nbsp;&nbsp;. . . . . .";
                                 }
-                                $(co).html("<p>"+real+"</p>");
+                                $(co).html("<p>" + real + "</p>");
                                 ///$('#ddd .title')          //useful thing!!!!!!!1
                             }
-                        },'json');
+                        }, 'json');
                     });
 
-                    $.post('php/getUserArticle.php',{},function (data) {
+                    $.post('php/getUserArticle.php', {}, function (data) {
                         console.log('kasdjflkajsdflkjdsalkfjlkdsafjlkdsa');
-                        
+
                         //window.alert(data);
                         var i;
                         var half = "#release-article-";
-                        for(i=number;i>=1;i--){
+                        for (i = number; i >= 1; i--) {
                             //alert(data["CONTENT"]);
-                            var whole = half+i;
+                            var whole = half + i;
                             var ml = marked(data[i].CONTENT);
                             // var ht = "<p>"+data[i].CONTENT+"</p>";
                             $(whole).addClass("Canclick");
-                            $(whole).data('releasearticleid',data[i].AID);
+                            $(whole).data('releasearticleid', data[i].AID);
                             //window.alert($(whole).data('releasearticleid'));
-                            var ti = whole+" .title";
-                            if(data[i].TITLE!="") {
-                                $(ti).html("<h4>"+data[i].TITLE+"</h4>");
+                            var ti = whole + " .title";
+                            if (data[i].TITLE != "") {
+                                $(ti).html("<h4>" + data[i].TITLE + "</h4>");
                             }
-                            else{
+                            else {
                                 $(ti).html("<h4>No Title</h4>");
                             }
-                            var co = whole+" .content";
+                            var co = whole + " .content";
                             $(co).html(ml);
                             var tent = $(co).text();
-                            var real = tent.substr(0,words);
-                            if(tent.length>words){
-                                real+="&nbsp;&nbsp;&nbsp;. . . . . .";
+                            var real = tent.substr(0, words);
+                            if (tent.length > words) {
+                                real += "&nbsp;&nbsp;&nbsp;. . . . . .";
                             }
-                            $(co).html("<p>"+real+"</p>");
+                            $(co).html("<p>" + real + "</p>");
                             ///$('#ddd .title')          //useful thing!!!!!!!1
                         }
-                    },'json');
+                    }, 'json');
                 }
-                else{
-                    var tml = ht+i+m+i+l;
+                else {
+                    var tml = ht + i + m + i + l;
                     $("#release-aritcles-container").html(tml);
                     //$(tml).insertAfter("#release-aritcles-container");
                     // $("<h4>It seems that you don't have article, why not writing something?</h4>").insertAfter("#release-article-1");
@@ -158,12 +158,12 @@
 
             setTimeout(function () {
                 $(".release-articles-base").click(function () {
-                    if(flag==1) {
+                    if (flag == 1) {
                         //window.alert("you click the article");
                         //window.alert($(this).data('releasearticleid'));
                         var aid = $(this).data('releasearticleid');
                         aid = aid - 1;
-                        $.post('./php/getArtID.php', {artid: aid}, function (data) {
+                        $.post('./php/getArtID.php', { artid: aid }, function (data) {
                             if (data) {
                                 window.location.href = "reading.html";
                             } else {
@@ -171,86 +171,89 @@
                             }
                         });
                     }
-                    else{
-                        window.location.href="editor.html";
+                    else {
+                        window.location.href = "editor.html";
                     }
                 });
 
                 $(".logout-button").click(function () {
-                    $.post("./php/logout.php",{},function (data) {
-                        if(data==1){
+                    $.post("./php/logout.php", {}, function (data) {
+                        if (data == 1) {
                             alert("You have logged out!");
-                            window.location.href="main-page.html";
+                            window.location.href = "main-page.html";
                         }
-                        else{
+                        else {
                             alert("You are not log out!");
                         }
                     })
                 });
-            },200);
+            }, 200);
 
         });
     </script>
 </head>
 
 <body>
-<ul id="ddown" class="dropdown-content">
-    <li>
-        <a href="./user-interface.html" style="color: #00b0ff;">My place</a>
-    </li>
-    <li>
-        <a class="logout-button" href="#" style="color: #00b0ff;">Logout</a>
-    </li>
-</ul>
-<nav>
-    <div class="nav-wrapper light-blue accent-3">
-        <a class="brand-logo">
-            <div style="background-image: url('./img/logo3.png'); background-size: contain; width: 50px; height: 50px; margin-left: 20px; margin-top: 7px;"></div>
-        </a>
-        <a href="#" data-activates="mobile" class="button-collapse"><i class="material-icons">menu</i></a>
-        <ul id="nav" class="right hide-on-med-and-down">
-            <li><a href="main-page.html">Main page</a></li>
-            <li><a class="edit" href="./editor.html">Edit your article</a></li>
-            <li>
-                <a href="" class="dropdown-button" data-activates="ddown" id="dropdownButton">
+    <ul id="ddown" class="dropdown-content">
+        <li>
+            <a href="./user-interface.html" style="color: #00b0ff;">My place</a>
+        </li>
+        <li>
+            <a class="logout-button" href="#" style="color: #00b0ff;">Logout</a>
+        </li>
+    </ul>
+    <nav>
+        <div class="nav-wrapper light-blue accent-3">
+            <a class="brand-logo">
+                <div
+                    style="background-image: url('./img/logo3.png'); background-size: contain; width: 50px; height: 50px; margin-left: 20px; margin-top: 7px;">
+                </div>
+            </a>
+            <a href="#" data-activates="mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+            <ul id="nav" class="right hide-on-med-and-down">
+                <li><a href="main-page.html">Main page</a></li>
+                <li><a class="edit" href="./editor.html">Edit your article</a></li>
+                <li>
+                    <a href="" class="dropdown-button" data-activates="ddown" id="dropdownButton">
                         <span id="nav-user-icon">
-                            <img src="./img/bird.jpg" alt="" class="circle" style="width: 50%; height: 50%; vertical-align: middle; border: 0.2vh solid white;">
+                            <img src="./img/bird.jpg" alt="" class="circle"
+                                style="width: 50%; height: 50%; vertical-align: middle; border: 0.2vh solid white;">
                         </span>
-                    <i class="fa fa-sort-desc right"></i>
-                </a>
-            </li>
-        </ul>
-        <ul class="side-nav" id="mobile">
-            <div id="sidebar-icon" style="margin: 0 auto; margin-top: 5%;">
-                <img src="./img/bird.jpg" class="circle" alt="" style="width: 100%; height: 100%;">
-            </div>
-            <div class="valign-wrapper">
-                <span id="sidebar-username" class="center-align">ReTayE</span>
-            </div>
-            <li><a href="main-page.html">Main page</a></li>
-            <li><a class="edit" href="./editor.html">Edit your article</a></li>
-            <li><a href="./user-interface.html">My place</a></li>
-            <li><a class="logout-button">Logout</a></li>
-        </ul>
-    </div>
-
-</nav>
-
-<div id="Container">
-    <div id="user-header" class="z-depth-2">
-        <div id="header-img">
-            <!--这个是用来放用户头像的-->
-            <div id="header-user-icon">
-                <img src="./img/bird.jpg" alt="">
-            </div>
+                        <i class="fa fa-sort-desc right"></i>
+                    </a>
+                </li>
+            </ul>
+            <ul class="side-nav" id="mobile">
+                <div id="sidebar-icon" style="margin: 0 auto; margin-top: 5%;">
+                    <img src="./img/bird.jpg" class="circle" alt="" style="width: 100%; height: 100%;">
+                </div>
+                <div class="valign-wrapper">
+                    <span id="sidebar-username" class="center-align">ReTayE</span>
+                </div>
+                <li><a href="main-page.html">Main page</a></li>
+                <li><a class="edit" href="./editor.html">Edit your article</a></li>
+                <li><a href="./user-interface.html">My place</a></li>
+                <li><a class="logout-button">Logout</a></li>
+            </ul>
         </div>
-        <div id="header-info">
-            <div id="header-info-title">
-                <!--下面这个span是用来放用户名的-->
-                <span class="user-name">ReTayE</span>
 
-                <!--用户个人信息标签-->
-                <span class="tags">
+    </nav>
+
+    <div id="Container">
+        <div id="user-header" class="z-depth-2">
+            <div id="header-img">
+                <!--这个是用来放用户头像的-->
+                <div id="header-user-icon">
+                    <img src="./img/bird.jpg" alt="">
+                </div>
+            </div>
+            <div id="header-info">
+                <div id="header-info-title">
+                    <!--下面这个span是用来放用户名的-->
+                    <span class="user-name">ReTayE</span>
+
+                    <!--用户个人信息标签-->
+                    <span class="tags">
                         <span class="chip">
                             <i class="fa fa-tag"></i>
                             SZU
@@ -268,22 +271,23 @@
                             Bilibili
                         </span>
                     </span>
-                <!--用户个人信息标签-->
+                    <!--用户个人信息标签-->
 
+                </div>
             </div>
         </div>
-    </div>
 
-    <!--用户已发布的文章-->
-    <div id="release-aritcles-container">
-        <!--data-releasearticleid对应的是文章在数据库中的编号.id是为了方便js获取元素而存在的-->
-        <!--文章内容直接放在每一个div中的-->
-        <div class="release-articles-base z-depth-2" id="release-article-1" data-releasearticleid="">
-            <div class="title"></div><div class="content"></div>
+        <!--用户已发布的文章-->
+        <div id="release-aritcles-container">
+            <!--data-releasearticleid对应的是文章在数据库中的编号.id是为了方便js获取元素而存在的-->
+            <!--文章内容直接放在每一个div中的-->
+            <div class="release-articles-base z-depth-2" id="release-article-1" data-releasearticleid="">
+                <div class="title"></div>
+                <div class="content"></div>
+            </div>
         </div>
-    </div>
 
-</div>
+    </div>
 </body>
 
 </html>

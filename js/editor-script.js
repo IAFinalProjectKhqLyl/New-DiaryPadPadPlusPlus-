@@ -5,7 +5,8 @@ $(document).ready(function () {
         width: '100%',
         height: '100%',
         emoji: true,
-        taskList: true,
+        taskList: false,
+        saveHTMLToTextarea: true,
         syncScrolling: true,
         path: 'editor.md/lib/',
         tex: false,
@@ -33,7 +34,7 @@ $(document).ready(function () {
                 if (dayNightMode % 2 == 0) {
                     console.log('here');
                     editor.setTheme('dark');
-                    editor.setEditorTheme('lesser-dark');
+                    editor.setEditorTheme('pastel-on-dark');
                     editor.setPreviewTheme('dark');
                 } else {
                     editor.setTheme('default');
