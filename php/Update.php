@@ -4,10 +4,9 @@ $username = $_POST['username'];
 $password = $_POST['password'];
 $email = $_POST['email'];
 
-$connection = new mysqli("localhost","root","","diary_pad");
+$connection = new mysqli("localhost", "root", "", "diary_pad");
 
-
-if($connection->connect_errno){
+if ($connection->connect_errno) {
     echo "Sorry, this website is experiencing problems.";
     echo "Error: Failed to make a MySQL connection, here is why: \n";
     echo "Errno: " . $connection->connect_errno . "\n";
@@ -26,17 +25,15 @@ $query = "INSERT INTO uname VALUES('$username','$password','$email')";
 //$query = "SELECT * FROM uname WHERE UNAME='$username' AND PASS='$password' ";
 
 $result = $connection->query($find);
-if(!$result){
+if (!$result) {
     $status = 0;
     die('mysql error');
 }
 
-if(mysqli_num_rows($result)<=0){
+if (mysqli_num_rows($result) <= 0) {
     $connection->query($query);
-    $status=1;
-}
-else{
-    $status=0;
+    $status = 1;
+} else {
+    $status = 0;
 }
 echo $status;
-?>

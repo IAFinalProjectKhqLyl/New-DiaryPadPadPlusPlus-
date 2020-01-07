@@ -26,14 +26,22 @@
     <!-- <script src="./js/jquery.backstretch.min.js"></script> -->
     <link href="./css/scrollbar-and-selection.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="./css/editor-style.css">
+    <link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.min.css">
     <script>
         $(document).ready(function () {
             $('.modal').modal();
 
             $('#confirm-button').click(function () {
+                console.log('dddebug');
+                
                 let Title = document.querySelector('#title-box').value;
+                document.cookie = 'newArticleTitle=' + Title;
+                let titleForShow = Title
+                if(titleForShow.length > 10) {
+                    titleForShow = titleForShow.slice(0, 10) + '...';
+                }
                 // console.log(Title);
-                $('#show-title').text(Title);
+                $('#show-title').text(titleForShow);
             });
            
             $('#confirm-button').mouseenter(function () { 
@@ -42,6 +50,16 @@
 
         });
     </script>
+    <style>
+        .editormd-form > input {
+            height: 20px !important;
+        }
+
+        .editormd-form > p > input {
+            height: 20px !important;
+        }
+
+    </style>
 </head>
 
 <body>

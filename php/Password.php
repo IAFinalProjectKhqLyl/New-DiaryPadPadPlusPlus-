@@ -2,10 +2,9 @@
 
 $password = $_POST['password'];
 
-$connection = new mysqli("localhost","root","","diary_pad");
+$connection = new mysqli("localhost", "root", "", "diary_pad");
 
-
-if($connection->connect_errno){
+if ($connection->connect_errno) {
     echo "Sorry, this website is experiencing problems.";
     echo "Error: Failed to make a MySQL connection, here is why: \n";
     echo "Errno: " . $connection->connect_errno . "\n";
@@ -17,15 +16,13 @@ $password = $connection->real_escape_string($password);
 $query = "SELECT * FROM uname WHERE PASS='$password'";
 
 $result = $connection->query($query);
-if(!$result){
+if (!$result) {
     die('mysql error');
 }
 
-if(mysqli_num_rows($result)<=0){
-    $data=1;
-}
-else{
-    $data=0;
+if (mysqli_num_rows($result) <= 0) {
+    $data = 1;
+} else {
+    $data = 0;
 }
 echo $data;
-?>

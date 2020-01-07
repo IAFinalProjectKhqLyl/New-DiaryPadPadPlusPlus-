@@ -60,4 +60,16 @@ html, body {
 .modal {
     height: 250px;
     width: 40%;
-  }
+}
+
+.editormd-image-dialog {
+    height: 420px !important;
+}
+
+.editormd-goto-line-dialog {
+    height: 200px !important;
+}
+
+[class*="editormd-dialog-1578"] {
+    height: 320px !important;
+}

@@ -1,5 +1,6 @@
 var dayNightMode = 0;
 var userIconTag = '<img src="./img/user-default-icon.png" width="21" height="21" style="border-radius: 50%"></img>';
+
 $(document).ready(function () {
     var editor = editormd('editor', {
         width: '100%',
@@ -17,16 +18,16 @@ $(document).ready(function () {
         gotoLine: true,
         placeholder: 'Enjoy Writing in DiaryPad...',
         toolbarIcons: function () {
-            return ['comeBack','undo', 'redo', 'bold', 'italic', 'del', 'hr', 'quote', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'list-ul', 'list-ol', 'info', 'watch', 'goto-line', 'emoji', 'image', 'link', 'code-block', 'table', '||','showTitle','dayAndNight','editTitle', 'summit'];
+            return ['comeBack','undo', 'redo', 'bold', 'italic', 'del', 'hr', 'quote', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'list-ul', 'list-ol', 'info', 'watch', 'goto-line', 'emoji', 'image', 'link', 'code-block', 'table', '||','titleIcon','showTitle','dayAndNight','editTitle', 'submit'];
         },
         toolbarIconTexts: {
-            summit: 'Submit blog',
+            submit: 'Submit blog',
             dayAndNight: 'Day/night mode',
             comeBack: "<i class='fa fa-arrow-left'></i><span>&nbsp;&nbsp;back to main page</span>",
             editTitle: "<span class='modal-trigger' href='#modal1' id='edit-title-button'>Edit title</span>",
             // titleIntput: "<span>Title&nbsp;:&emsp;</span><input type='text' style=''>",
             userIcon: userIconTag,
-            showTitle: "<span id='show-title'></span>"
+            showTitle: "<span id='show-title'>Your title...</span>"
         },
         toolbarHandlers: {
             dayAndNight: function () {
@@ -47,7 +48,7 @@ $(document).ready(function () {
             comeBack: function(){
                 window.location.href = './main-page.html'
             },
-            summit: function () {
+            submit: function () {
                 let articleTitle = document.querySelector('#title-box').value;
                 if(articleTitle == "" || articleTitle === null) {
                     alert('The title cannot be empty! Click the \"Edit title\" button to input your article title.');
@@ -58,21 +59,35 @@ $(document).ready(function () {
                     alert('Sorry, you cannot submit empty article!');
                     return ;
                 }
-                let title = document.querySelector('#show-title').innerText;
-                // console.log('asdfas:' + title);
+                let cookieArray = document.cookie.split(';');
+                
+                let title = (function() {
+                    for(let item of cookieArray) {
+                        item = item.trim();
+                        let itemList = item.split('=');
+                        if(itemList[0] == 'newArticleTitle') {
+                            return itemList[1];
+                        }
+                    }
+                })()
+                console.log('title = ' + title);
                 
                 $.post("./php/submitArticle.php", { article: txt, title: title }, function (data) {
                    // alert(data);
                     if (data == 1) {
                         alert("submit successfully!");
+                        $(window).attr('location','./user-interface.html');
                     } else {
-                        alert("sumit failed!");
+                        alert("submit failed!");
                     }
                 });
             },
             editTitle: function () {
                 $('#modal1').modal('open');
             }
+        },
+        toolbarCustomIcons : {
+            titleIcon: "<i class='fa fa-edit' id='title-icon' style='color: #676464; line-height: 30px;'></i>"
         }
     });
 
@@ -105,5 +120,9 @@ $(document).ready(function () {
         editor.setPreviewTheme(preview_area_theme);
     });
 
+    $('.editormd-preview-close-btn').remove();
+    // make the input box normal!
+    let len = $('.editormd-form').length;
+    console.log("$('.editormd-form').length = " + len);
     
 });

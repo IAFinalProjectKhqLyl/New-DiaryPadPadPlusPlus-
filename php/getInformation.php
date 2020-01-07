@@ -1,10 +1,8 @@
 <?php
 session_start();
-if(isset($_SESSION['loginUser'])){
+if (isset($_SESSION['loginUser'])) {
     $status = $_SESSION['loginUser'];
-}
-else{
+} else {
     $status = "Guest";
 }
 echo $status;
-?>

@@ -1,12 +1,9 @@
 <?php
 session_start();
-if(isset($_SESSION['loginUser']))
-{
+if (isset($_SESSION['loginUser'])) {
     $data = $_SESSION['loginUser'];
     echo $data;
-}
-else{
+} else {
     $data = "Guest";
     echo $data;
 }
-?>

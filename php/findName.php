@@ -2,13 +2,11 @@
 
 $username = $_POST['username'];
 
-if($username==""){
+if ($username == "") {
     $data = 2;
     echo $data;
-}
-else {
+} else {
     $connection = new mysqli("localhost", "root", "", "diary_pad");
-
 
     if ($connection->connect_errno) {
         echo "Sorry, this website is experiencing problems.";
@@ -33,4 +31,3 @@ else {
     }
     echo $data;
 }
-?>

@@ -1,11 +1,9 @@
 <?php
 session_start();
-if(isset($_SESSION['article'])){
+if (isset($_SESSION['article'])) {
     $data = $_SESSION['article'];
     echo $data;
-}
-else{
-    $data=NULL;
+} else {
+    $data = null;
     echo $data;
 }
-?>
